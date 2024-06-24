@@ -88,7 +88,7 @@ df_selection = df[
 # Title and subtitle with style and icons
 st.markdown(
     """
-    <h1 style='text-align: center; color: white;'>
+    <h1 style='text-align: center; color: black;'>
         TradeMe Dashboard <img src="https://img.icons8.com/color/48/000000/bar-chart.png" alt="bar chart icon"/>
     </h1>
     """,
@@ -119,9 +119,9 @@ st.markdown(
 )
 
 # Style configuration for Plotly charts
-plotly_template = "plotly_dark"
+plotly_template = "plotly_white"
 plot_bgcolor = 'rgba(0,0,0,0)'
-axis_style = dict(showgrid=False)
+axis_style = dict(showgrid=False, color='black')
 
 # Creating a bar chart for Average Rent by Region
 average_rent_by_region = (
@@ -134,13 +134,14 @@ fig_average_rent = px.bar(
     y="Rent",
     title="Average Rent by Region",
     color_discrete_sequence=["#1f77b4"],  # Set a single color for the bars
-    template="presentation",
+    template=plotly_template,
     text=average_rent_by_region["Rent"].round(0).astype(int).apply(lambda x: f"${x}")  # Add text to the bars with dollar sign
 )
 
 fig_average_rent.update_traces(
     texttemplate='%{text}', 
-    textposition='inside'  # Position the text inside the bars
+    textposition='inside',  # Position the text inside the bars
+    textfont=dict(color='black')  # Text color
 )
 
 fig_average_rent.update_layout(
@@ -153,7 +154,7 @@ fig_average_rent.update_layout(
         'x':0.5,
         'xanchor': 'center',
         'yanchor': 'top',
-        'font': {'family': 'Arial, sans-serif', 'size': 16, 'color': 'white'}  # Adjust title font to white
+        'font': {'family': 'Arial, sans-serif', 'size': 16, 'color': 'black'}  # Adjust title font to black
     },
     font=dict(
         family="Arial, sans-serif",
@@ -188,17 +189,17 @@ fig_days_on_market.update_layout(
     xaxis=axis_style,
     yaxis=axis_style,
     title={
-        'text': "Average Days on Market by Region",
+        'text': "<b>Average Days on Market by Region</b>",
         'y':0.95,
         'x':0.5,
         'xanchor': 'center',
         'yanchor': 'top',
-        'font': {'family': 'Arial, sans-serif', 'size': 16, 'color': 'white'}  # Adjust title font to white
+        'font': {'family': 'Arial, sans-serif', 'size': 16, 'color': 'black'}  # Adjust title font to black
     },
     font=dict(
         family="Arial, sans-serif",
         size=12,
-        color="white"  # Adjust font color to white
+        color="black"  # Adjust font color to black
     ),
     width=1000,  # Set the width to 1000 pixels
     height=600   # Set the height to 600 pixels
@@ -215,7 +216,7 @@ fig_listing_volume = px.line(
 )
 
 fig_listing_volume.update_traces(
-    line=dict(color="white")
+    line=dict(color="black")  # Line color
 )
 
 fig_listing_volume.update_layout(
@@ -223,17 +224,17 @@ fig_listing_volume.update_layout(
     xaxis=axis_style,
     yaxis=axis_style,
     title={
-        'text': "Listing Volume",
+        'text': "<b>Listing Volume</b>",
         'y':0.95,
         'x':0.5,
         'xanchor': 'center',
         'yanchor': 'top',
-        'font': {'family': 'Arial, sans-serif', 'size': 16, 'color': 'white'}  # Adjust title font to white
+        'font': {'family': 'Arial, sans-serif', 'size': 16, 'color': 'black'}  # Adjust title font to black
     },
     font=dict(
         family="Arial, sans-serif",
         size=12,
-        color="white"  # Adjust font color to white
+        color="black"  # Adjust font color to black
     )
 )
 
