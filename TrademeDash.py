@@ -24,6 +24,27 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+# Add custom CSS to set the background color to white
+st.markdown(
+    """
+    <style>
+    /* Set the background color of the entire page to white */
+    .main {
+        background-color: white !important;
+    }
+    /* Set the background color of the sidebar to white */
+    .css-1d391kg {
+        background-color: white !important;
+    }
+    /* Set the background color of the app content to white */
+    .css-18e3th9 {
+        background-color: white !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # Load data from Excel
 df = pd.read_excel(
     io='TradeMeNZ.xlsx',
@@ -133,7 +154,7 @@ fig_average_rent = px.bar(
     x="Region",
     y="Rent",
     title="Average Rent by Region",
-    color_discrete_sequence=["#1f77b4"],  # Set a single color for the bars
+    color_discrete_sequence=["#1A4DA7"],  # Set a single color for the bars
     template=plotly_template,
     text=average_rent_by_region["Rent"].round(0).astype(int).apply(lambda x: f"${x}")  # Add text to the bars with dollar sign
 )
@@ -141,7 +162,7 @@ fig_average_rent = px.bar(
 fig_average_rent.update_traces(
     texttemplate='%{text}', 
     textposition='inside',  # Position the text inside the bars
-    textfont=dict(color='black')  # Text color
+    textfont=dict(color='white')  # Text color
 )
 
 fig_average_rent.update_layout(
@@ -159,7 +180,7 @@ fig_average_rent.update_layout(
     font=dict(
         family="Arial, sans-serif",
         size=12,
-        color="black"  # Adjust font color
+        color="white"  # Adjust font color
     )
 )
 
@@ -174,15 +195,21 @@ fig_days_on_market = px.bar(
     y="Region",
     orientation="h",
     title="Average Days on Market by Region",
-    color="Days in the Market",  # Use Days in the Market for different colors
     template=plotly_template,
-    text=average_days_on_market["Days in the Market"].round(0).astype(int)  # Add text to the bars with no decimal places
+    text=average_days_on_market["Days in the Market"].round(0).astype(int),  # Add text to the bars with no decimal places
+    color_discrete_sequence=['#F46C3F']  # Set bar color to hex code F46C3F
 )
 
 fig_days_on_market.update_traces(
     texttemplate='%{text}', 
-    textposition='inside'  # Position the text inside the bars
+    textposition='inside',  # Position the text inside the bars
+    textfont=dict(
+        family="Arial, sans-serif",  # Font family
+        size=14,  # Font size
+        color='white'  # Font color
+    )
 )
+
 
 fig_days_on_market.update_layout(
     plot_bgcolor=plot_bgcolor,
@@ -202,8 +229,10 @@ fig_days_on_market.update_layout(
         color="black"  # Adjust font color to black
     ),
     width=1000,  # Set the width to 1000 pixels
-    height=600   # Set the height to 600 pixels
+    height=600,  # Set the height to 600 pixels
+    showlegend=False  # Remove the legend
 )
+
 
 # Create a line chart for Listing Volume
 listing_volume = df_selection["Property Listing Date"].value_counts().sort_index()
@@ -211,7 +240,7 @@ listing_volume = df_selection["Property Listing Date"].value_counts().sort_index
 fig_listing_volume = px.line(
     x=listing_volume.index,
     y=listing_volume.values,
-    title="Listing Volume",
+    title="Property Listing Volume",
     template=plotly_template,
 )
 
@@ -224,7 +253,7 @@ fig_listing_volume.update_layout(
     xaxis=axis_style,
     yaxis=axis_style,
     title={
-        'text': "<b>Listing Volume</b>",
+        'text': "<b>Property Listing Volume</b>",
         'y':0.95,
         'x':0.5,
         'xanchor': 'center',
